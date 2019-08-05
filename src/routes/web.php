@@ -15,5 +15,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/blocks/{block}', 'BlockController@getBlocks');
-//Route::get('/blocks/{block}', 'BlockController@getBlock');
+Route::get('/blocks/{block_id?}', 'BlockController@getBlocks')->where('block', '[0-9]+');
+
+//Route::get('/blocks', 'BlockController@test');
