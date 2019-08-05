@@ -9,4 +9,4 @@ A [LBRY](https://lbry.com) block explorer based on Laravel
 #### Models:
 Current model schema reflect chainquery [schema](https://github.com/lbryio/chainquery/blob/master/db/chainquery_schema.sql)
 
-![Model Schema](https://spee.ch/@SK3LA:3/chainqueryschema.svg)
+![Model Schema](https://spee.ch/@SK3LA:3/chainqueryschema2.svg)
