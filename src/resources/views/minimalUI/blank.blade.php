@@ -20,7 +20,9 @@
     =========================================================
     * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
     -->
-<link href="{!! asset('css/main.css') !!}" rel="stylesheet"></head>
+    @stack('styles')
+    <link href="{!! asset('css/main.css') !!}" rel="stylesheet">
+</head>
 <body>
     <div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
         <div class="app-header header-shadow">

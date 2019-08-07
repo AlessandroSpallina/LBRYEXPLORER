@@ -31,14 +31,14 @@ class Block extends Model
 {
     /**
      * The table associated with the model.
-     * 
+     *
      * @var string
      */
     protected $table = 'block';
 
     /**
      * The "type" of the auto-incrementing ID.
-     * 
+     *
      * @var string
      */
     protected $keyType = 'integer';
@@ -55,4 +55,5 @@ class Block extends Model
     {
         return $this->hasMany('App\Transaction', 'block_hash_id', 'hash');
     }
+
 }
