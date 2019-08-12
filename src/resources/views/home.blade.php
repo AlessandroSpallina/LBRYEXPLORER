@@ -22,9 +22,10 @@
 
 @section('content')
 <div class="container mb-4">
-  <form>
+  <form method="GET" action="/search">
+    @csrf
     <div class="input-group">
-      <input type="text" class="form-control form-control-lg" placeholder="Search block / address / hash / claim name">
+      <input name="q" type="text" class="form-control form-control-lg" placeholder="Search block / address / hash / claim name">
         <div class="input-group-append">
             <button class="btn btn-primary">Search</button>
         </div>
