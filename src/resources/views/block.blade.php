@@ -16,6 +16,7 @@
 
 @section('icon', 'pe-7s-star')
 @section('title', 'LBRY Block #'.$block->height)
+@section('description', 'Block Hash '.$block->hash)
 
 @section('content')
 <div class="row">
