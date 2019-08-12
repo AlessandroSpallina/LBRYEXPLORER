@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Transaction;
+use App\Input;
+use App\Output;
 use App\Block;
+use App\Address;
 
 class TransactionController extends Controller
 {
@@ -15,29 +18,71 @@ class TransactionController extends Controller
   public function getTransactions($tx = null) {
     if($tx) {  // requested specific transaction
       $tx = Transaction::where('hash', $tx)->firstOrFail();
+      //$inputs = $tx->inputs()->get();
+      $inputs = $tx->inputs()
+                ->leftJoin('address', 'input.input_address_id', 'address.id')
+                ->select('input.prevout_hash', 'input.is_coinbase', 'input.value', 'address.address')
+                ->get();
+
+      $outputs = $tx->outputs()
+                 ->leftJoin('input', 'output.spent_by_input_id', 'input.id')
+                 ->select('output.value', 'output.type', 'output.script_pub_key_asm', 'output.address_list', 'output.is_spent','input.transaction_hash as spent_hash')
+                 ->get();
+
 
       if($tx->block_hash_id != 'MEMPOOL') {
           $tx->block_height = Block::where('hash', $tx->block_hash_id)->value('height');
           $tx->confirmations = Block::latest()->take(1)->value('height') - $tx->block_height;
           $tx->transaction_size /= 1000;
+
+          // calculate transaction fee by inputs and outputs
+          $tx->fee = 0;
+          foreach($inputs as $input) {
+            $tx->fee += $input->value;
+          }
+          foreach($outputs as $output) {
+            $tx->fee -= $output->value;
+          }
+          $tx->fee = sprintf("%.f", $tx->fee);
       }
 
 
-      /*$block = Block::where('height', $height)->firstOrFail();
-      $transactions = $block->transactions()->get();
+      foreach ($outputs as $output) {
+        //output.address_list is an array of address, lets parse
+        $output->address_list = ltrim($output->address_list, "[");
+        $output->address_list = rtrim($output->address_list, "]");
+        $output->address_list = str_replace('"', '', $output->address_list);
+        $output->address_list = explode(',', $output->address_list);
 
-      $block->block_size /= 1000;
-      $block->block_time = Carbon::createFromTimestamp($block->block_time)->format('d M Y  H:i:s');
+        //check transaction opcode {OP_DUP | OP_CLAIM_NAME | OP_UPDATE_CLAIM | OP_SUPPORT_CLAIM}
+        $output->opcode_friendly = explode(' ', $output->script_pub_key_asm)[0];
+        switch($output->opcode_friendly) {
+          case 'OP_DUP':
+            // if standard transaction (type: pubkeyhash) then pass blank opcode to view
+            $output->opcode_friendly = " ";
+            break;
 
-      $block->confirmations = Block::latest()->take(1)->value('height') - $block->height;
+          case 'OP_CLAIM_NAME':
+            $output->opcode_friendly = "NEW CLAIM";
+            break;
 
-      $transactions->transform(function ($item, $key) {
-          $item->size /= 1000;
-          return $item;
-      });*/
+          case 'OP_UPDATE_CLAIM':
+            $output->opcode_friendly = "UPDATE CLAIM";
+            break;
+
+          case 'OP_SUPPORT_CLAIM':
+            $output->opcode_friendly = "SUPPORT CLAIM";
+            break;
+        }
+
+      }
+
 
       return view('transaction', [
-        'transaction' => $tx
+        'transaction' => $tx,
+        'inputs' => $inputs,
+        'outputs' => $outputs
+
       ]);
 
     } // list transactions

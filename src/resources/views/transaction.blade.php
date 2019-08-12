@@ -103,20 +103,22 @@
                       </div>
                   </div>
                 </li>
-                <li class="list-group-item">
-                  <div class="widget-content p-0">
-                      <div class="widget-content-outer">
-                          <div class="widget-content-wrapper">
-                              <div class="widget-content-left">
-                                  <div class="text-primary">Fee</div>
-                              </div>
-                              <div class="widget-content-right">
-                                  <div class="widget-numbers text-danger">x LBC</div>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-                </li>
+                @if ($transaction->block_hash_id != 'MEMPOOL')
+                  <li class="list-group-item">
+                    <div class="widget-content p-0">
+                        <div class="widget-content-outer">
+                            <div class="widget-content-wrapper">
+                                <div class="widget-content-left">
+                                    <div class="text-primary">Fee</div>
+                                </div>
+                                <div class="widget-content-right">
+                                    <div class="widget-numbers text-danger">{{ $transaction->fee }} LBC</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                  </li>
+                @endif
                 <li class="list-group-item">
                   <div class="widget-content p-0">
                       <div class="widget-content-outer">
@@ -171,15 +173,76 @@
     <div class="main-card mb-3 card">
       <div class="card-body">
         <h5 class="card-title">Details</h5>
-        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</p></div>
 
-        <div class="col-lg-4 mb-4 mb-lg-0">
-          <div class="card-shadow-info border mb-3 card card-body border-info float-left">
-            <h5 class="card-title">Info Card Shadow</h5>
-            With supporting text below as a natural lead-in to additional content.
+        <div class="row">
+          <div class="col-sm-5 mb-4 mb-sm-0">
+
+            @foreach ($inputs as $input)
+              <div class="card-shadow-primary border mb-3 card card-body border-primary">
+                @if ($input->is_coinbase)
+                  <h5 class="card-title">Block Reward</h5>
+                  New Coins
+                @else
+                  <h5 class="card-title">{{ $input->value }} LBC</h5>
+                  <p>
+                    from <a href="{{ route('account', $input->address) }}">{{ $input->address }}</a> <a href="{{ route('transactions', $input->prevout_hash) }}">(output)</a>
+                  </p>
+                @endif
+              </div>
+            @endforeach
+
+
+
+          </div>
+
+          <div class="">
+            <i class="fa fa-8x fa-angle-right icon-gradient bg-malibu-beach"> </i>
+          </div>
+
+          <div class="col-sm-5 mb-4 mb-sm-0">
+            @foreach ($outputs as $output)
+              <div class="card-shadow-info border mb-3 card card-body border-info">
+                <h5 class="card-title">
+                  {{ $output->value }} LBC
+                  <div
+                  @switch ($output->opcode_friendly[0])
+                    @case('N')
+                      class="mb-2 mr-2 badge badge-success">
+                      @break
+
+                    @case('U')
+                      class="mb-2 mr-2 badge badge-info">
+                      @break
+
+                    @case('S')
+                      class="mb-2 mr-2 badge badge-alternate">
+                      @break
+
+                    @default
+                      @break
+
+                  @endswitch
+                  {{ $output->opcode_friendly }}</div>
+                </h5>
+                <p>
+                  to
+                  @foreach ($output->address_list as $recipient_address)
+                    <a href="{{ route('account', $recipient_address) }}">{{ $recipient_address }}</a>
+                    @if ($output->is_spent)
+                      <a href="{{ route('transactions', $output->spent_hash) }}">(spent)</a>
+                    @else
+                      (unspent)
+                    @endif
+                  @endforeach
+                </p>
+              </div>
+            @endforeach
           </div>
         </div>
 
+
+
+      </div>
     </div>
   </div>
 
