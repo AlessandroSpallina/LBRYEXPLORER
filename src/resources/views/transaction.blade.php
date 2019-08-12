@@ -103,7 +103,7 @@
                       </div>
                   </div>
                 </li>
-                @if ($transaction->block_hash_id != 'MEMPOOL')
+                @if (($transaction->block_hash_id != 'MEMPOOL') && (!$inputs[0]->is_coinbase))
                   <li class="list-group-item">
                     <div class="widget-content p-0">
                         <div class="widget-content-outer">
