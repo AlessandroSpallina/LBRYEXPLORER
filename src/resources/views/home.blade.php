@@ -51,10 +51,10 @@
             <div class="widget-content-wrapper text-white">
                 <div class="widget-content-left">
                     <div class="widget-heading">Difficulty</div>
-                    <div class="widget-subheading">*what diff is*</div>
+                    <div class="widget-subheading">To find a hash below a given target</div>
                 </div>
                 <div class="widget-content-right">
-                    <div class="widget-numbers text-white"><span>903711020722.66</span></div>
+                    <div class="widget-numbers text-white"><span>{{ number_format($blocks[0]->difficulty) }}</span></div>
                 </div>
             </div>
         </div>

@@ -11,16 +11,25 @@
   .table-wrapper-scroll-y {
     display: block;
   }
-
 </style>
 @endpush
 
 @section('icon', 'pe-7s-star')
 @section('title', 'LBRY Block #'.$block->height)
 
-
-
 @section('content')
+<div class="row">
+  <div class="col-lg-12">
+    <a class="mb-2 mr-2 btn-transition btn btn-sm btn-outline-primary float-left" href="{{ route('blocks', $block->height - 1) }}">« Previous Block</a>
+    <a class="mb-2 mr-2 btn-transition btn btn-sm btn-outline-primary float-right"
+      @if ($block->confirmations == 0)
+        data-toggle="tooltip" title="" data-placement="top" data-original-title="This is the last mined block!" href="#"
+      @else
+        href="{{ route('blocks', $block->height + 1) }}"
+      @endif
+      >Next Block »</a>
+  </div>
+</div>
 
 <div class="row">
   <div class="col-lg-5 mb-4 mb-lg-0">

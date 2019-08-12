@@ -100,10 +100,25 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('transactions') }}">
+                                    <a href="#">
                                         <i class="metismenu-icon pe-7s-diamond"></i>
                                         Transactions
+                                        <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                                     </a>
+                                    <ul>
+                                      <li>
+                                        <a href="{{ route('transactions') }}">
+                                          <i class="metismenu-icon"></i>
+                                          Mined
+                                        </a>
+                                      </li>
+                                      <li>
+                                        <a href="#">
+                                          <i class="metismenu-icon"></i>
+                                          Mempool
+                                        </a>
+                                      </li>
+                                    </ul>
                                 </li>
 
                                 <li class="app-sidebar__heading">Claimtrie</li>

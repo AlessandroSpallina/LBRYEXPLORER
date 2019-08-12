@@ -17,7 +17,7 @@
 
 
 Route::get('/', 'HomeController');
-Route::get('/blocks/{block_id?}', 'BlockController@getBlocks')->where('block', '[0-9]+')->name('blocks');
-Route::get('/txs/{tx_id?}', 'TransactionController@getBlocks')/*->where('block', '[0-9]+')*/->name('transactions');
+Route::get('/blocks/{height?}', 'BlockController@getBlocks')->where('height', '[0-9]+')->name('blocks');
+Route::get('/txs/{tx?}', 'TransactionController@getTransactions')->where('tx', '[A-Za-z0-9]+')->name('transactions');
 Route::get('/claims/{claim_id?}', 'ClaimController@getBlocks')/*->where('block', '[0-9]+')*/->name('claims');
 //Route::get('/blocks', 'BlockController@test');

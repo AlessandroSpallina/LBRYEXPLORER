@@ -14,19 +14,20 @@ class BlockController extends Controller
     return view('welcome');
   }
 
-  public function getBlocks($block_id = null) {
-    if($block_id) {  // requested specific block num
-      $block = Block::findOrFail($block_id);
+  public function getBlocks($height = null) {
+    if($height) {  // requested specific block num
+      $block = Block::where('height', $height)->firstOrFail();
       $transactions = $block->transactions()->get();
 
       $block->block_size /= 1000;
       $block->block_time = Carbon::createFromTimestamp($block->block_time)->format('d M Y  H:i:s');
 
+      $block->confirmations = Block::latest()->take(1)->value('height') - $block->height;
+
       $transactions->transform(function ($item, $key) {
-          $item->size /= 1000;
+          $item->transaction_size /= 1000;
           return $item;
       });
-
 
       return view('block', [
         'block' => $block,
