@@ -1,5 +1,8 @@
 # LBRYexplorer
-A [LBRY](https://lbry.com) block explorer based on Laravel
+A [LBRY](https://lbry.com) block explorer based on Laravel.
+
+ > ### :information_source:  Note
+ > This project is on early stages of development, it is currently hosted [here](https://spallina.dev). Pease expect bugs and missing pages.
 
 #### Dependencies:
 * [LBRYcrd v0.12.4.1](https://github.com/lbryio/lbrycrd/releases/tag/v0.12.4.1)
