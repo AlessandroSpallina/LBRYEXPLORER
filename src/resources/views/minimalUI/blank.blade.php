@@ -184,6 +184,9 @@
                                                 Found a bug? Open an issue!
                                             </a>
                                         </li>
+                                        <li class="nav-item">
+                                            <div class="navbar-text text-muted">Page took {{ number_format((microtime(true) - LARAVEL_START), 3) }} s</div>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
