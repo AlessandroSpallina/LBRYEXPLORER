@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 use App\Transaction;
 use App\Input;
@@ -87,6 +88,21 @@ class TransactionController extends Controller
 
     } // list transactions
 
+    $transactions = Transaction::where('block_hash_id', '<>', 'MEMPOOL')
+                                ->orderBy('id', 'desc')
+                                ->paginate(25);
+
+    $transactions->transform(function ($item, $key) {
+        $item->transaction_time = Carbon::createFromTimestamp($item->transaction_time)->format('d M Y  H:i:s');
+        $item->transaction_size /= 1000;
+        return $item;
+    });
+
+    //dd($blocks);
+
+    return view('transactions', [
+      'transactions' => $transactions
+    ]);
 
 
   }
