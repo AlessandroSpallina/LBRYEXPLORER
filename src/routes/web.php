@@ -17,7 +17,7 @@ Route::get('/blocks/{height?}', 'BlockController@getBlocks')->where('height', '[
 Route::get('/txs/{tx?}', 'TransactionController@getTransactions')->where('tx', '[A-Za-z0-9]+')->name('transactions');
 Route::get('/mempool', 'TransactionController@getMempoolTransactions')->name('transactions_mempool');
 
-Route::get('/claims/{claim?}', 'ClaimController@getBlocks')/*->where('block', '[0-9]+')*/->name('claims');
+Route::get('/claims/{claim?}', 'ClaimController@getClaims')/*->where('block', '[0-9]+')*/->name('claims');
 Route::get('/account/{account}', 'AccountController@getAccount')->where('tx', '[A-Za-z0-9]+')->name('account');
 
 Route::get('/search', 'SearchController')->where('what', '[A-Za-z0-9]+');
