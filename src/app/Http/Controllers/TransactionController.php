@@ -98,12 +98,25 @@ class TransactionController extends Controller
         return $item;
     });
 
-    //dd($blocks);
-
     return view('transactions', [
       'transactions' => $transactions
     ]);
-
-
   }
+
+  public function getMempoolTransactions() {
+    $transactions = Transaction::where('block_hash_id', 'MEMPOOL')
+                                ->orderBy('id', 'desc')
+                                ->paginate(25);
+
+    $transactions->transform(function ($item, $key) {
+        $item->transaction_size /= 1000;
+        return $item;
+    });
+
+    return view('transactions_mempool', [
+      'transactions' => $transactions
+    ]);
+  }
+
+
 }

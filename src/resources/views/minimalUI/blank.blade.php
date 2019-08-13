@@ -113,7 +113,7 @@
                                         </a>
                                       </li>
                                       <li>
-                                        <a href="#">
+                                        <a href="{{ route('transactions_mempool') }}">
                                           <i class="metismenu-icon"></i>
                                           Mempool
                                         </a>

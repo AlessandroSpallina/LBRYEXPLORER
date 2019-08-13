@@ -45,7 +45,7 @@
                 <td>{{ $transaction->value }} LBC</td>
                 <td>{{ $transaction->input_count }}</td>
                 <td>{{ $transaction->output_count }}</td>
-                <td>{{ $transaction->transaction_size }}</td>
+                <td>{{ $transaction->transaction_size }} kB</td>
                 <td>{{ $transaction->fee }} LBC</td>
               </tr>
             @endforeach
