@@ -1,19 +1,5 @@
 @extends('minimalUI.blank')
 
-@push('styles')
-<style>
-  .my-custom-scrollbar {
-    position: relative;
-    height: 445px;
-    overflow: auto;
-  }
-
-  .table-wrapper-scroll-y {
-    display: block;
-  }
-</style>
-@endpush
-
 @section('icon', 'pe-7s-diamond')
 @section('title', 'LBRY Transaction '.$transaction->hash)
 

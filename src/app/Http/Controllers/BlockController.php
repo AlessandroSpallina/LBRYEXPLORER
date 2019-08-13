@@ -10,9 +10,6 @@ use App\Transaction;
 
 class BlockController extends Controller
 {
-  public function test() {
-    return view('welcome');
-  }
 
   public function getBlocks($height = null) {
     if($height) {  // requested specific block num
@@ -36,6 +33,25 @@ class BlockController extends Controller
 
     } // list blocks
 
+    $blocks = Block::orderBy('id', 'desc')->paginate(25);
+
+    /*foreach($blocks as $block) {
+      $block->block_size /= 1000;
+      $block->block_time = Carbon::createFromTimestamp($block->block_time)->format('d M Y  H:i:s');
+      $block->transactions = count(explode(',', $block->transaction_hashes));
+    }*/
+    $blocks->transform(function ($item, $key) {
+        $item->block_time = Carbon::createFromTimestamp($item->block_time)->format('d M Y  H:i:s');
+        $item->block_size /= 1000;
+        $item->transactions = count(explode(',', $item->transaction_hashes));
+        return $item;
+    });
+
+    //dd($blocks);
+
+    return view('blocks', [
+      'blocks' => $blocks
+    ]);
 
 
   }
