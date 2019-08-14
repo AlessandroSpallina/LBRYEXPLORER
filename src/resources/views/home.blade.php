@@ -102,9 +102,7 @@
             </table>
         </div>
         <div class="card-footer">
-          <button class="mb-2 mr-2 btn btn-outline-primary btn-sm btn-block">
-            See all blocks
-          </button>
+          <a class="mb-2 mr-2 btn btn-outline-primary btn-sm btn-block" href="{{ route('blocks') }}">See all blocks</a>
         </div>
     </div>
   </div>
@@ -134,9 +132,7 @@
             </table>
         </div>
         <div class="card-footer">
-          <button class="mb-2 mr-2 btn btn-outline-primary btn-sm btn-block">
-            See all transactions
-          </button>
+          <a class="mb-2 mr-2 btn btn-outline-primary btn-sm btn-block" href="{{ route('transactions') }}">See all transactions</a>
         </div>
     </div>
   </div>
