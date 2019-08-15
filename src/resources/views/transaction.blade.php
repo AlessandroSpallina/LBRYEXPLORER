@@ -171,7 +171,7 @@
                 @else
                   <h5 class="card-title">{{ $input->value }} LBC</h5>
                   <p>
-                    from <a href="{{ route('account', $input->address) }}">{{ $input->address }}</a> <a href="{{ route('transactions', $input->prevout_hash) }}">(output)</a>
+                    from <a href="{{ route('address', $input->address) }}">{{ $input->address }}</a> <a href="{{ route('transactions', $input->prevout_hash) }}">(output)</a>
                   </p>
                 @endif
               </div>
@@ -213,7 +213,7 @@
                 <p>
                   to
                   @foreach ($output->address_list as $recipient_address)
-                    <a href="{{ route('account', $recipient_address) }}">{{ $recipient_address }}</a>
+                    <a href="{{ route('address', $recipient_address) }}">{{ $recipient_address }}</a>
                     @if ($output->is_spent)
                       <a href="{{ route('transactions', $output->spent_hash) }}">(spent)</a>
                     @else
