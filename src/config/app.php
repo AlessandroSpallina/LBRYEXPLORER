@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'LBRYexplorer'),
+    'name' => env('APP_NAME', 'LBRYEXPLORER'),
 
     /*
     |--------------------------------------------------------------------------
