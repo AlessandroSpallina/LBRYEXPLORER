@@ -39,7 +39,7 @@
           <thead>
             <tr>
               <th>Hash</th>
-              <th>Block Time</th>
+              <th>Timestamp</th>
               <th>Value</th>
               <th>Inputs</th>
               <th>Outputs</th>

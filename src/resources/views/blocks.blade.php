@@ -43,6 +43,7 @@
               <th>Size</th>
               <th>Difficulty
                 <span class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="Percentages indicate changes in difficulty from the previous block"></span>
+              </th>
               <th>Nonce</th>
             </tr>
           </thead>

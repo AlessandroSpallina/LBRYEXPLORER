@@ -15703,7 +15703,7 @@ legend {
 
 .widget-content .widget-numbers {
     font-weight: bold;
-    font-size: 1.8rem;
+    font-size: 1.4rem;
     display: block
 }
 
@@ -24298,7 +24298,7 @@ a.fc-more:hover {
         margin: 0 auto
     }
     .widget-content .widget-numbers {
-        font-size: 1.6rem;
+        font-size: 1.2rem;
         line-height: 1
     }
     .slick-slider-sm .slick-slider {
