@@ -35,14 +35,23 @@ class BlockController extends Controller
 
     $blocks = Block::orderBy('id', 'desc')->paginate(25);
 
-    $blocks->transform(function ($item, $key) {
+    $previous_block_difficulty = 0;  // used to calculate difficulty variation from the previous and current block
+
+    //reversing done because need to access block in chronological order in order to calculate difficulty diff
+    $blocks->reverse()->transform(function ($item, $key) use (& $previous_block_difficulty) {
         $item->block_time = Carbon::createFromTimestamp($item->block_time)->format('d M Y  H:i:s');
         $item->block_size /= 1000;
         $item->transactions = count(explode(',', $item->transaction_hashes));
+
+        if($previous_block_difficulty != 0) {  //if here : this is not the oldest block in the page
+          //calculating difficulty diff percentage between previous and current block
+          $item->difficulty_diff_percent = number_format((($item->difficulty - $previous_block_difficulty) / $previous_block_difficulty * 100), 1);
+        }
+        $previous_block_difficulty = $item->difficulty;
+
         return $item;
     });
 
-    //dd($blocks);
 
     return view('blocks', [
       'blocks' => $blocks

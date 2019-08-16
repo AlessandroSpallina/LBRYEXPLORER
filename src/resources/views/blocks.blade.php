@@ -41,6 +41,8 @@
               <th>Block Time</th>
               <th>Transactions</th>
               <th>Size</th>
+              <th>Difficulty
+                <span class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="Percentages indicate changes in difficulty from the previous block"></span>
               <th>Nonce</th>
             </tr>
           </thead>
@@ -51,6 +53,16 @@
                 <td>{{ $block->block_time }}</td>
                 <td>{{ $block->transactions }} txs</td>
                 <td>{{ $block->block_size }} kB</td>
+                <td>
+                  @if ($block->difficulty_diff_percent > 0)
+                    [<i class="fa fa-caret-up icon-gradient bg-success"></i> +{{ $block->difficulty_diff_percent }}%]
+                  @elseif ($block->difficulty_diff_percent < 0)
+                    [<i class="fa fa-caret-down icon-gradient bg-danger"></i> {{ $block->difficulty_diff_percent }}%]
+                  @endif
+
+
+                  {{ number_format($block->difficulty) }}
+                </td>
                 <td>{{ $block->nonce }}</td>
               </tr>
             @endforeach
