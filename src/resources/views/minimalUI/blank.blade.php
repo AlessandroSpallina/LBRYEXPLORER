@@ -120,13 +120,24 @@
                                       </li>
                                     </ul>
                                 </li>
-
                                 <li class="app-sidebar__heading">Claimtrie</li>
                                 <li>
                                     <a href="{{ route('claims') }}">
                                         <i class="metismenu-icon pe-7s-airplay"></i>
                                         Claims
                                     </a>
+                                </li>
+                                <li class="app-sidebar__heading">Search</li>
+                                <li>
+                                  <form method="GET" action="/search">
+                                    @csrf
+                                    <div class="input-group">
+                                      <input name="q" type="text" class="form-control form-control-sm" placeholder="block/address/hash/claims">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-outline-primary btn-sm"><i class="fa fa-search"></i></button>
+                                        </div>
+                                    </div>
+                                  </form>
                                 </li>
                             </ul>
                         </div>

@@ -59,8 +59,6 @@
                   @elseif ($block->difficulty_diff_percent < 0)
                     [<i class="fa fa-caret-down icon-gradient bg-danger"></i> {{ $block->difficulty_diff_percent }}%]
                   @endif
-
-
                   {{ number_format($block->difficulty) }}
                 </td>
                 <td>{{ $block->nonce }}</td>
