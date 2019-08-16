@@ -60,11 +60,21 @@
           <div class="row">
             <div class="col-lg-6 mb-2">
               <div class="text-primary">Difficulty</div>
-                {{ $block->difficulty }}
+                {{ number_format($block->difficulty) }}
             </div>
             <div class="col-lg-6 mb-2">
               <div class="text-primary">Nonce</div>
                 {{ $block->nonce }}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-6 mb-2">
+              <div class="text-primary">Transactions</div>
+                {{ count($transactions) }}
+            </div>
+            <div class="col-lg-6 mb-2">
+              <div class="text-primary">Version</div>
+                {{ $block->version }}
             </div>
           </div>
           <div class="row">
@@ -83,12 +93,6 @@
             <div class="col-lg-12 mb-2">
               <div class="text-primary">Name Claim Root</div>
                 {{ $block->name_claim_root }}
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-lg-6 mb-2">
-              <div class="text-primary">Version</div>
-                {{ $block->version }}
             </div>
           </div>
         </div>
