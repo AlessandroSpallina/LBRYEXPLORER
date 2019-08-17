@@ -76,6 +76,37 @@
 </div>
 
 <div class="row">
+  <div class="col-lg-12">
+    <div class="mb-3 card">
+          <div class="card-header-tab card-header">
+              <div class="card-header-title">
+                  <i class="header-icon lnr-rocket icon-gradient bg-tempting-azure"> </i>
+                  <div id="chart_title">Difficulty [last 12 hours]</div>
+              </div>
+              <div class="btn-actions-pane-right">
+                  <div class="nav">
+                      <a href="javascript:void(0);" class="border-0 btn-pill btn-wide btn-transition active btn btn-outline-alternate">Difficulty</a>
+                      <a href="javascript:void(0);" class="ml-1 btn-pill btn-wide border-0 btn-transition  btn btn-outline-alternate second-tab-toggle-alt">Block Size</a>
+                  </div>
+              </div>
+          </div>
+          <div class="tab-content">
+              <div class="tab-pane fade active show">
+                  <div class="widget-chart p-3">
+                      <div style="height: 350px">
+                        <div id="app">
+                          <home-chart></home-chart>
+                        </div>
+                      </div>
+                      <div class="widget-chart-content text-center mt-5"></div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+
+<div class="row">
   <div class="col-lg-6 mb-4 mb-lg-0">
     <div class="main-card mb-3 card">
         <div class="card-body table-wrapper-scroll-y my-custom-scrollbar">

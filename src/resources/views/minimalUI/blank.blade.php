@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
     <meta name="description" content="Check LBRY.com">
     <meta name="msapplication-tap-highlight" content="no">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <!--
     =========================================================
     * ArchitectUI HTML Theme Dashboard - v1.0.0
@@ -21,7 +22,8 @@
     * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
     -->
     @stack('styles')
-    <link href="{!! asset('css/main.css') !!}" rel="stylesheet">
+    <link href="{{ asset('css/main.css') }}" rel="stylesheet"> <!-- template import -->
+    <!-- <link href="{{ asset('css/app.css') }}" rel="stylesheet">  laravel import -->
 </head>
 <body>
     <div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
@@ -206,6 +208,8 @@
                   </div>
                 </div>
               </div>
-    <script type="text/javascript" src="{!! asset('js/main.js') !!}"></script>
+    <script type="text/javascript" src="{{ asset('js/main.js') }}"></script> <!-- template import -->
+    <script src="{{ asset('js/app.js') }}" defer></script> <!-- laravel import -->
+    @stack('script')
   </body>
 </html>

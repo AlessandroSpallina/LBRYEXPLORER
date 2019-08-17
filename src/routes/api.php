@@ -13,6 +13,12 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
+/*Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
+});*/
+
+Route::group([
+    'prefix' => 'v1'
+], function ($router) {
+    Route::get('difficulty/{last_n_hours}', 'APIController@difficulty')->where('last_n_hours', '[0-9]+')->name('difficulty_api');
 });
