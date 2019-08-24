@@ -16,7 +16,7 @@ class APIController extends Controller
 
     $diff = Block::where('block_time', '>', $time)
             ->orderBy('block_time', 'asc')
-            ->select('block_time', 'difficulty')
+            ->select('height', 'block_time', 'difficulty')
             ->get();
 
     return response()->json($diff);

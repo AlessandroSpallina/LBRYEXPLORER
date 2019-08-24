@@ -1739,7 +1739,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   methods: {
     renderChart: function renderChart() {
-      var uri = 'http://192.168.1.42/api/v1/difficulty/12';
+      var uri = 'http://localhost/api/v1/difficulty/12';
+      var Height = new Array();
       var Time = new Array();
       var Difficulty = new Array();
       this.axios.get(uri).then(function (response) {
@@ -1747,6 +1748,7 @@ __webpack_require__.r(__webpack_exports__);
 
         if (data) {
           data.forEach(function (element) {
+            Height.push(element.height);
             Time.push(new Date(element.block_time * 1000).toLocaleTimeString());
             Difficulty.push(element.difficulty);
           });
@@ -1764,9 +1766,6 @@ __webpack_require__.r(__webpack_exports__);
             options: {
               responsive: true,
               maintainAspectRatio: false,
-              onResize: function onResize() {
-                console.log('ciao');
-              },
               scales: {
                 yAxes: [{
                   ticks: {
@@ -1785,6 +1784,14 @@ __webpack_require__.r(__webpack_exports__);
                     maxTicksLimit: 15
                   }
                 }]
+              },
+              tooltips: {
+                callbacks: {
+                  footer: function footer(tooltipItems, data) {
+                    return Height[tooltipItems[0].index];
+                  }
+                },
+                footerFontStyle: 'normal'
               }
             }
           });

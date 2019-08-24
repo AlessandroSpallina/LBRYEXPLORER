@@ -42,13 +42,15 @@ export default {
 
    methods: {
      renderChart() {
-       let uri = 'https://spallina.dev/api/v1/difficulty/12';
+       let uri = 'http://localhost/api/v1/difficulty/12';
+       let Height = new Array();
        let Time = new Array();
        let Difficulty = new Array();
        this.axios.get(uri).then((response) => {
           let data = response.data;
           if(data) {
              data.forEach(element => {
+             Height.push(element.height);
              Time.push(new Date(element.block_time * 1000).toLocaleTimeString());
              Difficulty.push(element.difficulty);
              });
@@ -61,14 +63,11 @@ export default {
                     backgroundColor: '#FC2525',
                     data: Difficulty,
                     fill: true
-                    }]
+                  }]
                },
                options: {
                  responsive: true,
                  maintainAspectRatio: false,
-                 onResize: () => {
-                   console.log('ciao');
-                 },
                  scales: {
                    yAxes: [
                      {
@@ -89,7 +88,15 @@ export default {
                        maxTicksLimit: 15
                      }
                    }]
-                 }
+                 },
+                 tooltips: {
+					         callbacks: {
+						         footer: function(tooltipItems, data) {
+                       return Height[tooltipItems[0].index];
+						         },
+					         },
+					         footerFontStyle: 'normal'
+				         },
                }
              });
             } else {
