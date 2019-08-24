@@ -89,14 +89,22 @@
                             <ul class="vertical-nav-menu">
                                 <li class="app-sidebar__heading"></li>
                                 <li>
-                                    <a href="/" class="mm-active">
+                                    @if(Route::currentRouteName() === 'home')
+                                      <a href="/" class="mm-active">
+                                    @else
+                                      <a href="/">
+                                    @endif
                                         <i class="metismenu-icon pe-7s-rocket"></i>
                                         Home
                                     </a>
                                 </li>
                                 <li class="app-sidebar__heading">Blockchain</li>
                                 <li>
-                                    <a href="{{ route('blocks') }}">
+                                    @if(Route::currentRouteName() === 'blocks')
+                                      <a href="{{ route('blocks') }}" class="mm-active">
+                                    @else
+                                      <a href="{{ route('blocks') }}">
+                                    @endif
                                         <i class="metismenu-icon pe-7s-star"></i>
                                         Blocks
                                     </a>
@@ -109,14 +117,22 @@
                                     </a>
                                     <ul>
                                       <li>
-                                        <a href="{{ route('transactions') }}">
-                                          <i class="metismenu-icon"></i>
-                                          Mined
-                                        </a>
+                                          @if(Route::currentRouteName() === 'transactions')
+                                            <a href="{{ route('transactions') }}" class="mm-active">
+                                          @else
+                                            <a href="{{ route('transactions') }}">
+                                          @endif
+                                              <i class="metismenu-icon"></i>
+                                              Mined
+                                          </a>
                                       </li>
                                       <li>
-                                        <a href="{{ route('transactions_mempool') }}">
-                                          <i class="metismenu-icon"></i>
+                                          @if(Route::currentRouteName() === 'transactions_mempool')
+                                            <a href="{{ route('transactions_mempool') }}" class="mm-active">
+                                          @else
+                                            <a href="{{ route('transactions_mempool') }}">
+                                          @endif
+                                              <i class="metismenu-icon"></i>
                                           Mempool
                                         </a>
                                       </li>
@@ -124,7 +140,11 @@
                                 </li>
                                 <li class="app-sidebar__heading">Claimtrie</li>
                                 <li>
-                                    <a href="{{ route('claims') }}">
+                                    @if(Route::currentRouteName() === 'claims')
+                                      <a href="{{ route('claims') }}" class="mm-active">
+                                    @else
+                                      <a href="{{ route('claims') }}">
+                                    @endif
                                         <i class="metismenu-icon pe-7s-airplay"></i>
                                         Claims
                                     </a>

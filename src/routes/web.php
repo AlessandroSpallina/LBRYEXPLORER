@@ -12,7 +12,7 @@
 */
 
 
-Route::get('/', 'HomeController');
+Route::get('/', 'HomeController')->name('home');
 Route::get('/blocks/{height?}', 'BlockController@getBlocks')->where('height', '[0-9]+')->name('blocks');
 Route::get('/txs/{tx?}', 'TransactionController@getTransactions')->where('tx', '[A-Za-z0-9]{64}')->name('transactions');
 Route::get('/mempool', 'TransactionController@getMempoolTransactions')->name('transactions_mempool');
