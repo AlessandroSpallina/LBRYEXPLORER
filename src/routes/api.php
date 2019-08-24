@@ -21,4 +21,5 @@ Route::group([
     'prefix' => 'v1'
 ], function ($router) {
     Route::get('difficulty/{last_n_hours}', 'APIController@difficulty')->where('last_n_hours', '[0-9]+')->name('difficulty_api');
+    Route::get('blocksize/{last_n_hours}', 'APIController@blockSize')->where('last_n_hours', '[0-9]+')->name('blocksize_api');
 });

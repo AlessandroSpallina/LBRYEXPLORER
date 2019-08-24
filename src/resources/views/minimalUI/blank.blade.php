@@ -209,7 +209,6 @@
                 </div>
               </div>
     <script type="text/javascript" src="{{ asset('js/main.js') }}"></script> <!-- template import -->
-    <script src="{{ asset('js/app.js') }}" defer></script> <!-- laravel import -->
     @stack('script')
   </body>
 </html>

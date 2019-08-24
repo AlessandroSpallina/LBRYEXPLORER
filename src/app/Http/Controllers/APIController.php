@@ -22,5 +22,17 @@ class APIController extends Controller
     return response()->json($diff);
   }
 
+  public function blockSize($last_n_hours) {
+    $time = Carbon::now()->sub('hour', $last_n_hours)->timestamp;
+
+
+    $diff = Block::where('block_time', '>', $time)
+            ->orderBy('block_time', 'asc')
+            ->select('height', 'block_time', 'block_size')
+            ->get();
+
+    return response()->json($diff);
+  }
+
 
 }

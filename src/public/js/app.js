@@ -1737,13 +1737,42 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      //chart: "",
+      selected_tab: 0,
+      api_endpoint: 'http://localhost/api/v1',
+      api: [{
+        name: 'Difficulty',
+        api_method: '/difficulty/12'
+      }, {
+        name: 'Block Size',
+        api_method: '/blocksize/12'
+      }]
+    };
+  },
   methods: {
-    renderChart: function renderChart() {
-      var uri = 'http://localhost/api/v1/difficulty/12';
+    panelClick: function panelClick(index) {
+      this.selected_tab = index;
+      this.chart.destroy();
+
+      switch (index) {
+        case 0:
+          this.renderDifficultyChart();
+          break;
+
+        case 1:
+          this.renderBlockSizeChart();
+          break;
+      }
+    },
+    renderDifficultyChart: function renderDifficultyChart() {
+      var _this = this;
+
       var Height = new Array();
       var Time = new Array();
       var Difficulty = new Array();
-      this.axios.get(uri).then(function (response) {
+      this.axios.get(this.api_endpoint + this.api[this.selected_tab].api_method).then(function (response) {
         var data = response.data;
 
         if (data) {
@@ -1752,15 +1781,18 @@ __webpack_require__.r(__webpack_exports__);
             Time.push(new Date(element.block_time * 1000).toLocaleTimeString());
             Difficulty.push(element.difficulty);
           });
-          new Chart(document.getElementById('chart_body').getContext('2d'), {
-            type: 'bar',
+          _this.chart = new Chart(document.getElementById('chart_body').getContext('2d'), {
+            type: 'line',
             data: {
               labels: Time,
               datasets: [{
                 label: 'Difficulty',
                 backgroundColor: '#FC2525',
+                borderColor: '#FC2525',
                 data: Difficulty,
-                fill: true
+                fill: false,
+                pointRadius: 1,
+                pointHoverRadius: 10
               }]
             },
             options: {
@@ -1786,9 +1818,75 @@ __webpack_require__.r(__webpack_exports__);
                 }]
               },
               tooltips: {
+                mode: 'index',
+                intersect: false,
                 callbacks: {
                   footer: function footer(tooltipItems, data) {
-                    return Height[tooltipItems[0].index];
+                    return 'Block #' + Height[tooltipItems[0].index];
+                  }
+                },
+                footerFontStyle: 'normal'
+              }
+            }
+          });
+        } else {
+          console.log('No data');
+        }
+      });
+    },
+    renderBlockSizeChart: function renderBlockSizeChart() {
+      var _this2 = this;
+
+      var Height = new Array();
+      var Time = new Array();
+      var BlockSize = new Array();
+      this.axios.get(this.api_endpoint + this.api[this.selected_tab].api_method).then(function (response) {
+        var data = response.data;
+
+        if (data) {
+          data.forEach(function (element) {
+            Height.push(element.height);
+            Time.push(new Date(element.block_time * 1000).toLocaleTimeString());
+            BlockSize.push(element.block_size / 1000);
+          });
+          _this2.chart = new Chart(document.getElementById('chart_body').getContext('2d'), {
+            type: 'line',
+            data: {
+              labels: Time,
+              datasets: [{
+                label: 'Block Size',
+                backgroundColor: '#005ec9',
+                borderColor: '#005ec9',
+                data: BlockSize,
+                fill: false,
+                pointRadius: 1,
+                pointHoverRadius: 10
+              }]
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              scales: {
+                yAxes: [{
+                  ticks: {
+                    callback: function callback(label, index, labels) {
+                      return label + 'kB';
+                    }
+                  }
+                }],
+                xAxes: [{
+                  ticks: {
+                    autoSkip: true,
+                    maxTicksLimit: 15
+                  }
+                }]
+              },
+              tooltips: {
+                mode: 'index',
+                intersect: false,
+                callbacks: {
+                  footer: function footer(tooltipItems, data) {
+                    return 'Block #' + Height[tooltipItems[0].index];
                   }
                 },
                 footerFontStyle: 'normal'
@@ -1802,7 +1900,7 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   mounted: function mounted() {
-    this.renderChart();
+    this.renderDifficultyChart();
   }
 });
 
@@ -70372,60 +70470,74 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "row" }, [
+    _c("div", { staticClass: "col-lg-12" }, [
+      _c("div", { staticClass: "mb-3 card" }, [
+        _c("div", { staticClass: "card-header-tab card-header" }, [
+          _c("div", { staticClass: "card-header-title" }, [
+            _c("i", {
+              staticClass:
+                "header-icon lnr-rocket icon-gradient bg-tempting-azure"
+            }),
+            _vm._v(" "),
+            _c("div", { attrs: { id: "chart_title" } }, [
+              _vm._v(
+                _vm._s(_vm.api[_vm.selected_tab].name) + " [latest 12 hours]"
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "btn-actions-pane-right" }, [
+            _c("div", { staticClass: "nav" }, [
+              _c(
+                "button",
+                {
+                  staticClass:
+                    "ml-1 border-0 btn btn-pill btn-wide btn-transition btn-outline-alternate",
+                  class: { active: _vm.selected_tab === 0 },
+                  attrs: { id: "0_button" },
+                  on: {
+                    click: function($event) {
+                      return _vm.panelClick(0)
+                    }
+                  }
+                },
+                [_vm._v("Difficulty")]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass:
+                    "ml-1 border-0 btn btn-pill btn-wide btn-transition btn-outline-alternate",
+                  class: { active: _vm.selected_tab === 1 },
+                  attrs: { id: "1_button" },
+                  on: {
+                    click: function($event) {
+                      return _vm.panelClick(1)
+                    }
+                  }
+                },
+                [_vm._v("Block Size")]
+              )
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _vm._m(0)
+      ])
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-lg-12" }, [
-        _c("div", { staticClass: "mb-3 card" }, [
-          _c("div", { staticClass: "card-header-tab card-header" }, [
-            _c("div", { staticClass: "card-header-title" }, [
-              _c("i", {
-                staticClass:
-                  "header-icon lnr-rocket icon-gradient bg-tempting-azure"
-              }),
-              _vm._v(" "),
-              _c("div", { attrs: { id: "chart_title" } }, [
-                _vm._v("Difficulty [last 12 hours]")
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "btn-actions-pane-right" }, [
-              _c("div", { staticClass: "nav" }, [
-                _c(
-                  "a",
-                  {
-                    staticClass:
-                      "border-0 btn-pill btn-wide btn-transition active btn btn-outline-alternate",
-                    attrs: { href: "javascript:void(0);" }
-                  },
-                  [_vm._v("Difficulty")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "a",
-                  {
-                    staticClass:
-                      "ml-1 btn-pill btn-wide border-0 btn-transition  btn btn-outline-alternate second-tab-toggle-alt",
-                    attrs: { href: "javascript:void(0);" }
-                  },
-                  [_vm._v("Block Size")]
-                )
-              ])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "tab-content" }, [
-            _c("div", { staticClass: "tab-pane fade active show" }, [
-              _c("div", { staticClass: "chart-container" }, [
-                _c("canvas", { attrs: { id: "chart_body" } })
-              ])
-            ])
-          ])
+    return _c("div", { staticClass: "tab-content" }, [
+      _c("div", { staticClass: "tab-pane fade active show" }, [
+        _c("div", { staticClass: "chart-container" }, [
+          _c("canvas", { attrs: { id: "chart_body" } })
         ])
       ])
     ])
