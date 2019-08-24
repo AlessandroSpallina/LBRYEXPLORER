@@ -18,8 +18,6 @@
 @section('title', 'Welcome, this is the LBRY BlockExplorer')
 @section('description', 'LBRY is a secure, open, and community-run digital marketplace.')
 
-
-
 @section('content')
 <div class="container mb-4">
   <form method="GET" action="/search">
@@ -75,7 +73,7 @@
     </div>
 </div>
 
-<div class="row">
+<!--<div class="row">
   <div class="col-lg-12">
     <div class="mb-3 card">
           <div class="card-header-tab card-header">
@@ -95,7 +93,7 @@
                   <div class="widget-chart p-3">
                       <div style="height: 350px">
                         <div id="app">
-                          <home-chart></home-chart>
+                          <charts></charts>
                         </div>
                       </div>
                       <div class="widget-chart-content text-center mt-5"></div>
@@ -104,6 +102,9 @@
           </div>
       </div>
   </div>
+</div>-->
+<div id="app">
+  <charts></charts>
 </div>
 
 <div class="row">

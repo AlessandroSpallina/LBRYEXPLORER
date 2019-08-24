@@ -25,7 +25,7 @@ Vue.use(VueAxios, axios);
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
-Vue.component('home-chart', require('./components/HomeChart.vue').default);
+Vue.component('charts', require('./components/Charts.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
