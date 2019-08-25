@@ -44,7 +44,7 @@ export default {
      return {
        //chart: "",
        selected_tab: 0,
-       api_endpoint: 'https://spallina.dev/api/v1',
+       api_endpoint: 'http://localhost/api/v1',
        api: [{
               name: 'Difficulty',
               api_method: '/difficulty/12'
