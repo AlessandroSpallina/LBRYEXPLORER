@@ -88,14 +88,29 @@ class TransactionController extends Controller
 
     } // list transactions
 
-    $transactions = Transaction::select('hash', 'transaction_time', 'value', 'input_count', 'output_count', 'transaction_size')
+    $transactions = Transaction::select('id', 'hash', 'transaction_time', 'value', 'input_count', 'output_count', 'transaction_size')
                                 ->where('block_hash_id', '<>', 'MEMPOOL')
                                 ->orderBy('id', 'desc')
+                                ->with(['inputs', 'outputs'])
                                 ->simplePaginate(25);
 
     $transactions->transform(function ($item, $key) {
         $item->transaction_time = Carbon::createFromTimestamp($item->transaction_time)->format('d M Y  H:i:s');
         $item->transaction_size /= 1000;
+
+        //lets calculate fees!
+        $item->fee = 0;
+        if($item->inputs[0]->is_coinbase) {
+          return $item;
+        }
+        foreach($item->inputs as $input) {
+          $item->fee += $input->value;
+        }
+        foreach($item->outputs as $output) {
+          $item->fee -= $output->value;
+        }
+        $item->fee = sprintf("%.f", $item->fee);
+        
         return $item;
     });
 

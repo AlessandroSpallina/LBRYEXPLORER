@@ -20,11 +20,14 @@ class HomeController extends Controller
     public function __invoke(Request $request)
     {
         $blocks = Block::orderBy('id', 'desc')->take(15)->get(['height', 'block_time', 'transaction_hashes', 'block_size', 'difficulty']);
-        $transactions = Transaction::where('block_hash_id', '<>' , 'MEMPOOL')->orderBy('id', 'desc')->take(15)->get(['hash', 'transaction_time', 'value']);
-        //$blocks = Block::latest()->take(15)->get(['height', 'block_time', 'transaction_hashes', 'block_size', 'difficulty']);
-        //$transactions = Transaction::latest()->where('block_hash_id', '<>' , 'MEMPOOL')->take(15)->get(['hash', 'transaction_time', 'value', 'fee']);
 
-        
+        //$transactions = Transaction::where('block_hash_id', '<>' , 'MEMPOOL')->orderBy('id', 'desc')->take(15)->get(['hash', 'transaction_time', 'value']);
+        $transactions = Transaction::select('id', 'hash', 'transaction_time', 'value')
+                                    ->where('block_hash_id', '<>' , 'MEMPOOL')
+                                    ->orderBy('id', 'desc')
+                                    ->take(15)
+                                    ->with(['inputs', 'outputs'])
+                                    ->get();
 
         $now = Carbon::now();
 
@@ -37,6 +40,20 @@ class HomeController extends Controller
 
         $transactions->transform(function ($item, $key) use ($now) {
             $item->age = Carbon::createFromTimestamp($item->transaction_time)->diffInMinutes($now);
+
+            //lets calculate fees!
+            $item->fee = 0;
+            if($item->inputs[0]->is_coinbase) {
+              return $item;
+            }
+            foreach($item->inputs as $input) {
+              $item->fee += $input->value;
+            }
+            foreach($item->outputs as $output) {
+              $item->fee -= $output->value;
+            }
+            $item->fee = sprintf("%.f", $item->fee);
+
             return $item;
         });
 
