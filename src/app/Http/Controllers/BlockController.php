@@ -14,7 +14,7 @@ class BlockController extends Controller
   public function getBlocks($height = null) {
     if($height) {  // requested specific block num
       $block = Block::where('height', $height)->firstOrFail();
-      $transactions = $block->transactions()->get();
+      $transactions = $block->transactions()->get(['hash', 'value', 'input_count', 'output_count', 'transaction_size']);
 
       $block->block_size /= 1000;
       $block->block_time = Carbon::createFromTimestamp($block->block_time)->format('d M Y  H:i:s');
@@ -33,7 +33,7 @@ class BlockController extends Controller
 
     } // list blocks
 
-    $blocks = Block::orderBy('id', 'desc')->paginate(25);
+    $blocks = Block::select('height', 'block_time', 'transaction_hashes', 'block_size', 'difficulty', 'nonce')->orderBy('id', 'desc')->simplePaginate(25);
 
     $previous_block_difficulty = 0;  // used to calculate difficulty variation from the previous and current block
 

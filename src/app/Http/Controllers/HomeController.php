@@ -19,8 +19,10 @@ class HomeController extends Controller
      */
     public function __invoke(Request $request)
     {
-        $blocks = Block::latest()->take(15)->get(['height', 'block_time', 'transaction_hashes', 'block_size', 'difficulty']);
-        $transactions = Transaction::latest()->where('block_hash_id', '<>' , 'MEMPOOL')->take(15)->get(['hash', 'transaction_time', 'value', 'fee']);
+        $blocks = Block::orderBy('id', 'desc')->take(15)->get(['height', 'block_time', 'transaction_hashes', 'block_size', 'difficulty']);
+        $transactions = Transaction::where('block_hash_id', '<>' , 'MEMPOOL')->orderBy('id', 'desc')->take(15)->get(['hash', 'transaction_time', 'value', 'fee']);
+        //$blocks = Block::latest()->take(15)->get(['height', 'block_time', 'transaction_hashes', 'block_size', 'difficulty']);
+        //$transactions = Transaction::latest()->where('block_hash_id', '<>' , 'MEMPOOL')->take(15)->get(['hash', 'transaction_time', 'value', 'fee']);
 
         $now = Carbon::now();
 

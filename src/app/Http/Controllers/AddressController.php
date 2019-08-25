@@ -21,7 +21,7 @@ class AddressController extends Controller
             ->leftJoin('block', 'transaction.block_hash_id', 'block.hash')
             ->select('transaction_address.credit_amount', 'transaction_address.debit_amount', 'transaction.transaction_time', 'transaction.transaction_size', 'transaction.hash', 'transaction.input_count', 'transaction.output_count', 'block.height')
             ->orderBy('height', 'desc')
-            ->paginate(25);
+            ->simplePaginate(25);
 
     // calculating total received and total sent
     $address->total_received = 0;

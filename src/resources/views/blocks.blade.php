@@ -2,18 +2,16 @@
 
 @push('styles')
 <style>
-  @media screen and (min-width: 1400px) {
-    .pagination.center,
-    .pagination.center ul {
-      float: left;
-      position: relative;
-    }
-    .pagination.center {
-      left: 50%;
-    }
-    .pagination.center ul {
-      left: -50%;
-    }
+  .pagination.center,
+  .pagination.center ul {
+    float: left;
+    position: relative;
+  }
+  .pagination.center {
+    left: 50%;
+  }
+  .pagination.center ul {
+    left: -50%;
   }
   .my-custom-scrollbar {
     position: relative;

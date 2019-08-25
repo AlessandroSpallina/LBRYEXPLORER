@@ -19,7 +19,7 @@ class TransactionController extends Controller
   public function getTransactions($tx = null) {
     if($tx) {  // requested specific transaction
       $tx = Transaction::where('hash', $tx)->firstOrFail();
-      //$inputs = $tx->inputs()->get();
+
       $inputs = $tx->inputs()
                 ->leftJoin('address', 'input.input_address_id', 'address.id')
                 ->select('input.prevout_hash', 'input.is_coinbase', 'input.value', 'address.address')
@@ -88,9 +88,10 @@ class TransactionController extends Controller
 
     } // list transactions
 
-    $transactions = Transaction::where('block_hash_id', '<>', 'MEMPOOL')
+    $transactions = Transaction::select('hash', 'transaction_time', 'value', 'input_count', 'output_count', 'transaction_size')
+                                ->where('block_hash_id', '<>', 'MEMPOOL')
                                 ->orderBy('id', 'desc')
-                                ->paginate(25);
+                                ->simplePaginate(25);
 
     $transactions->transform(function ($item, $key) {
         $item->transaction_time = Carbon::createFromTimestamp($item->transaction_time)->format('d M Y  H:i:s');
@@ -104,9 +105,10 @@ class TransactionController extends Controller
   }
 
   public function getMempoolTransactions() {
-    $transactions = Transaction::where('block_hash_id', 'MEMPOOL')
+    $transactions = Transaction::select('hash', 'value', 'input_count', 'output_count', 'transaction_size')
+                                ->where('block_hash_id', 'MEMPOOL')
                                 ->orderBy('id', 'desc')
-                                ->paginate(25);
+                                ->simplePaginate(25);
 
     $transactions->transform(function ($item, $key) {
         $item->transaction_size /= 1000;
