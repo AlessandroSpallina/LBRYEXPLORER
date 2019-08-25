@@ -15,10 +15,11 @@ class TransactionController extends Controller
 {
 
 
-
   public function getTransactions($tx = null) {
     if($tx) {  // requested specific transaction
       $tx = Transaction::where('hash', $tx)->firstOrFail();
+
+      $tx->small_hash = substr($tx->hash, 0, 10).'...'.substr($tx->hash, -10);
 
       $inputs = $tx->inputs()
                 ->leftJoin('address', 'input.input_address_id', 'address.id')
@@ -110,7 +111,7 @@ class TransactionController extends Controller
           $item->fee -= $output->value;
         }
         $item->fee = sprintf("%.f", $item->fee);
-        
+
         return $item;
     });
 

@@ -4,7 +4,7 @@
 <style>
   .my-custom-scrollbar {
     position: relative;
-    height: 445px;
+    height: 495px;
     overflow: auto;
   }
 
@@ -16,7 +16,7 @@
 
 @section('icon', 'pe-7s-star')
 @section('title', 'LBRY Block #'.$block->height)
-@section('description', 'Block Hash '.$block->hash)
+@section('description', 'Block Hash '.$block->small_hash)
 
 @section('content')
 <div class="row">
@@ -75,6 +75,12 @@
             <div class="col-lg-6 mb-2">
               <div class="text-primary">Version</div>
                 {{ $block->version }}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-12 mb-2">
+              <div class="text-primary">Hash</div>
+                {{ $block->hash }}
             </div>
           </div>
           <div class="row">

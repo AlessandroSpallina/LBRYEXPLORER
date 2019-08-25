@@ -40,10 +40,10 @@
                   <div class="widget-content-outer">
                     <div class="widget-content-wrapper">
                       <div class="widget-content-left">
-                        <div class="widget-heading">Balance</div>
+                        <div class="text-primary">Balance</div>
                       </div>
                       <div class="widget-content-right">
-                        <div class="widget-numbers">{{ $address->balance }}</div>
+                        <div class="">{{ $address->balance }}</div>
                         <div class="widget-subheading">LBC</div>
                       </div>
                     </div>
@@ -61,10 +61,10 @@
                   <div class="widget-content-outer">
                     <div class="widget-content-wrapper">
                       <div class="widget-content-left">
-                        <div class="widget-heading">Value</div>
+                        <div class="text-primary">Value</div>
                       </div>
                       <div class="widget-content-right">
-                        <div class="widget-numbers">$ {{ $address->balance * 0.015 }}</div>
+                        <div class="">$ {{ $address->balance * 0.015 }}</div>
                         <div class="widget-subheading">@ $0.015/LBC</div>
                       </div>
                     </div>
@@ -82,10 +82,10 @@
                   <div class="widget-content-outer">
                     <div class="widget-content-wrapper">
                       <div class="widget-content-left">
-                        <div class="widget-heading">Received</div>
+                        <div class="text-primary">Received</div>
                       </div>
                       <div class="widget-content-right">
-                        <div class="widget-numbers">{{ $address->total_received }}</div>
+                        <div class="">{{ $address->total_received }}</div>
                         <div class="widget-subheading">LBC</div>
                       </div>
                     </div>
@@ -103,10 +103,10 @@
                   <div class="widget-content-outer">
                     <div class="widget-content-wrapper">
                       <div class="widget-content-left">
-                        <div class="widget-heading">Sent</div>
+                        <div class="text-primary">Sent</div>
                       </div>
                       <div class="widget-content-right">
-                        <div class="widget-numbers">{{ $address->total_sent }}</div>
+                        <div class="">{{ $address->total_sent }}</div>
                         <div class="widget-subheading">LBC</div>
                       </div>
                     </div>

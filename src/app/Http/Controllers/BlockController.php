@@ -16,6 +16,8 @@ class BlockController extends Controller
       $block = Block::where('height', $height)->firstOrFail();
       $transactions = $block->transactions()->get(['hash', 'value', 'input_count', 'output_count', 'transaction_size']);
 
+      $block->small_hash = substr($block->hash, 0, 10).'...'.substr($block->hash, -10);
+
       $block->block_size /= 1000;
       $block->block_time = Carbon::createFromTimestamp($block->block_time)->format('d M Y  H:i:s');
 

@@ -141,9 +141,9 @@
                                 <li class="app-sidebar__heading">Claimtrie</li>
                                 <li>
                                     @if(Route::currentRouteName() === 'claims')
-                                      <a href="{{ route('claims') }}" class="mm-active">
+                                      <a href="{{ route('claims') }}" class="mm-active" onclick="return false;">
                                     @else
-                                      <a href="{{ route('claims') }}">
+                                      <a href="{{ route('claims') }}" onclick="return false;">
                                     @endif
                                         <i class="metismenu-icon pe-7s-airplay"></i>
                                         Claims
@@ -184,11 +184,11 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="page-title-actions">
+                                <!--<div class="page-title-actions">
                                     <button type="button" data-toggle="tooltip" title="@yield('tooltip')" data-placement="bottom" class="btn-shadow mr-3 btn btn-dark">
                                         <i class="fa fa-star"></i>
                                     </button>
-                                </div>
+                                </div>-->
                               </div>
                         </div>
                         @yield('content')
